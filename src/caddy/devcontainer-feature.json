@@ -1,0 +1,8 @@
+{
+    "name": "Caddy",
+    "id": "caddy",
+    "version": "1",
+    "description": "Add caddy web server",
+    "options": {
+    }
+}

@@ -1,12 +1,8 @@
 {
-    "color_and_hello": {
-        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "all": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
         "features": {
-            "color": {
-                "favorite": "purple"
-            },
-            "hello": {
-                "greeting": "Greetings"
+            "caddy": {
             }
         }
     }
