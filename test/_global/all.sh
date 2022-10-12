@@ -16,8 +16,8 @@ set -e
 # Optional: Import test library bundled with the devcontainer CLI
 source dev-container-features-test-lib
 
-echo -e "The result of the 'caddy' command will be:\n"
-caddy
+echo -e "The result of the 'caddy version' command will be:\n"
+caddy version
 echo -e "\n"
 
 # Report result
