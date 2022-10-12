@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 
+VERSION=${VERSION:-"latest"}
+CADDY_DIR=${CADDY_DIR:-"/usr/local/caddy"}
+
 set -e
 
 if [ "$(id -u)" -ne 0 ]; then
     echo -e 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
     exit 1
 fi
+
+architecture="$(uname -m)"
+if [ "${architecture}" != "amd64" ] && [ "${architecture}" != "x86_64" ] && [ "${architecture}" != "arm64" ] && [ "${architecture}" != "aarch64" ]; then
+    echo "(!) Architecture $architecture unsupported"
+    exit 1
+fi
+
 
 apt_get_update()
 {
@@ -27,11 +37,27 @@ check_packages() {
 export DEBIAN_FRONTEND=noninteractive
 
 # Install packages
-check_packages debian-keyring debian-archive-keyring apt-transport-https curl
+check_packages curl
 
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list
+# Fetch latest version of Hugo if needed
+if [ "${VERSION}" = "latest" ] || [ "${VERSION}" = "lts" ]; then
+    export VERSION=$(curl -s https://api.github.com/repos/caddyserver/caddy/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4)}')
+fi
 
-# Install caddy
-apt-get update -y
-check_packages caddy
+if ! caddy version &> /dev/null ; then
+    echo "Installing Caddy..."
+    installation_dir="$CADDY_DIR/bin"
+    mkdir -p "$installation_dir"
+
+    # Install ARM or x86 version of caddy based on current machine architecture
+    if [ "$(uname -m)" == "aarch64" ]; then
+        arch="arm64"
+    fi
+
+    caddy_filename="caddy_${VERSION}_linux_${arch}.tar.gz"
+    curl -fsSLO --compressed "https://github.com/caddyserver/caddy/releases/download/v${VERSION}/${caddy_filename}"
+    tar -xzf "$caddy_filename" -C "$installation_dir"
+    rm "$caddy_filename"
+fi
+
+echo "Done!"

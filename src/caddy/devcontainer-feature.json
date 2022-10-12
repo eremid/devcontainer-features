@@ -1,8 +1,20 @@
 {
     "name": "Caddy",
     "id": "caddy",
-    "version": "1.0.0",
+    "version": "2.6.1",
     "description": "Add caddy web server",
     "options": {
-    }
+        "version": {
+          "type": "string",
+          "proposals": [
+            "latest"
+          ],
+          "default": "latest",
+          "description": "Select or enter a version."
+        }
+      },
+      "containerEnv": {
+        "CADDY_DIR": "/usr/local/caddy",
+        "PATH": "/usr/local/caddy/bin:${PATH}"
+      }
 }
