@@ -47,7 +47,8 @@ fi
 if ! caddy version &> /dev/null ; then
     echo "Installing Caddy..."
     # Install ARM or x86 version of caddy based on current machine architecture
-    if [ "$(uname -m)" == "aarch64" ]; then
+    arch=$(uname -m)
+    if [ "$arch" == "aarch64" ]; then
         arch="arm64"
     fi
 
