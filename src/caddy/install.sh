@@ -50,6 +50,8 @@ if ! caddy version &> /dev/null ; then
     arch=$(uname -m)
     if [ "$arch" == "aarch64" ]; then
         arch="arm64"
+    elif [ "$arch" == "x86_64" ]; then
+        arch="amd64"
     fi
 
     caddy_filename="caddy_${VERSION}_linux_${arch}.tar.gz"
