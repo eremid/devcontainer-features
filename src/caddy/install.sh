@@ -46,16 +46,20 @@ fi
 
 if ! caddy version &> /dev/null ; then
     echo "Installing Caddy..."
-    installation_dir="$CADDY_DIR/bin"
-    mkdir -p "$installation_dir"
-
     # Install ARM or x86 version of caddy based on current machine architecture
     if [ "$(uname -m)" == "aarch64" ]; then
         arch="arm64"
     fi
 
     caddy_filename="caddy_${VERSION}_linux_${arch}.tar.gz"
-    curl -fsSLO --compressed "https://github.com/caddyserver/caddy/releases/download/v${VERSION}/${caddy_filename}"
+    installation_dir="$CADDY_DIR/bin"
+    mkdir -p "$installation_dir"
+
+    caddy_filename="caddy_${VERSION}_linux_${arch}.tar.gz"
+    caddy_url="https://github.com/caddyserver/caddy/releases/download/v${VERSION}/${caddy_filename}"
+    
+    echo "Downloading from ${caddy_url}"
+    curl -fsSLO --compressed "$caddy_url"
     tar -xzf "$caddy_filename" -C "$installation_dir"
     rm "$caddy_filename"
 fi
