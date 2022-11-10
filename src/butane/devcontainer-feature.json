@@ -1,0 +1,16 @@
+{
+    "name": "Butane",
+    "id": "butane",
+    "version": "0.16.0",
+    "description": "Add butane tool",
+    "options": {
+        "version": {
+          "type": "string",
+          "proposals": [
+            "latest"
+          ],
+          "default": "latest",
+          "description": "Select or enter a version."
+        }
+      }
+}
