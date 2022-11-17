@@ -7,9 +7,7 @@ Add butane tool
 
 ```json
 "features": {
-    "ghcr.io/eremid/devcontainer-features/butane:0": {
-        "version": "latest"
-    }
+    "ghcr.io/eremid/devcontainer-features/butane:0": {}
 }
 ```
 
