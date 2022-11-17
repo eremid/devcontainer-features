@@ -1,0 +1,16 @@
+{
+    "name": "Kustomize",
+    "id": "kustomize",
+    "version": "4.5.7",
+    "description": "Add kustomize tool",
+    "options": {
+        "version": {
+          "type": "string",
+          "proposals": [
+            "latest"
+          ],
+          "default": "latest",
+          "description": "Select or enter a version."
+        }
+      }
+}
