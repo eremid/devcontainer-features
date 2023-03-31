@@ -7,9 +7,7 @@ Add caddy web server
 
 ```json
 "features": {
-    "ghcr.io/eremid/devcontainer-features/caddy:2": {
-        "version": "latest"
-    }
+    "ghcr.io/eremid/devcontainer-features/caddy:2": {}
 }
 ```
 
